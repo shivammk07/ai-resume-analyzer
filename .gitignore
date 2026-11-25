@@ -1,0 +1,22 @@
+# Maven & Java build outputs
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# IDE & OS metadata
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+.DS_Store
+
+# Environment & local runtime data
+.env*
+!.env.example
+/data/
+.aistudio/

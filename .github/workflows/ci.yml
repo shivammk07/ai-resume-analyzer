@@ -1,0 +1,43 @@
+name: CareerPulse Java 17 Maven CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  java-17-build-test-and-verify:
+    name: Java 17 — Checkstyle, JUnit 5, CLI Self-Test, Javadoc & WAR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Temurin JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run Checkstyle Code Quality Verification
+        run: mvn -B checkstyle:check
+
+      - name: Compile, Execute 7 JUnit 5 + Mockito Suites & Package Tomcat 10+ WAR
+        run: mvn -B clean test package
+
+      - name: Run Zero-API-Key Standalone CLI Tester (--self-test)
+        run: >
+          mvn -B exec:java
+          -Dexec.mainClass=com.careerpulse.cli.CareerPulseStandaloneTester
+          -Dexec.args="--self-test"
+
+      - name: Generate Javadoc API Documentation
+        run: mvn -B javadoc:javadoc
+
+      - name: Upload Packaged Jakarta EE 10 WAR Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: careerpulse-jakarta-war
+          path: target/careerpulse.war

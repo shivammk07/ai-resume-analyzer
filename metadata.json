@@ -1,0 +1,6 @@
+{
+  "name": "CareerPulse - AI Resume Analyzer",
+  "description": "Privacy-first deterministic ATS resume audit platform with Core Java 17, JDBC DAO, Jakarta EE 10 Servlets/JSP, Swing Desktop GUI, and zero external API keys.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
